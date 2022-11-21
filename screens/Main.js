@@ -1,18 +1,23 @@
 import HomeScreen from "./HomeScreen";
 import JournalScreen from "./JournalScreen";
 import Constants from "expo-constants";
-import {createStackNavigator} from "@react-navigation/stack";
 import {createDrawerNavigator, DrawerContentScrollView, DrawerItemList} from '@react-navigation/drawer';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {Icon} from "react-native-elements";
 import {Image, Platform, StyleSheet, Text, View} from "react-native";
 
 const Drawer = createDrawerNavigator();
 
+const screenOptions = {
+    headerTintColor: '#fff',
+    headerStyle: {backgroundColor: '#5637DD'}
+};
+
 const HomeNavigator = () => {
-    const Stack = createStackNavigator();
+    const Stack = createNativeStackNavigator();
 
     return (
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={screenOptions}>
             <Stack.Screen
                 name="home"
                 component={HomeScreen}
@@ -22,35 +27,15 @@ const HomeNavigator = () => {
                         <Icon
                             name="home"
                             type="font-awesome"
+                            iconStyle={styles.stackIcon}
                             onPress={() => navigation.toggleDrawer()}
                         />
                     )
-                })}/>
+                })}
+            />
         </Stack.Navigator>
-    );
-};
-
-const JournalNavigator = () => {
-    const Stack = createStackNavigator();
-
-    return (
-        <Stack.Navigator>
-            <Stack.Screen
-                name="journal"
-                component={JournalScreen}
-                options={({navigation}) => ({
-                    title: 'Journal',
-                    headerLeft: () => (
-                        <Icon
-                            name="heart"
-                            type="font-awesome"
-                            onPress={() => navigation.toggleDrawer()}
-                        />
-                    )
-                })}/>
-        </Stack.Navigator>
-    );
-};
+    )
+}
 
 const CustomDrawerContent = (props) => (
     <DrawerContentScrollView {...props}>
@@ -74,30 +59,7 @@ const Main = () => {
                     component={HomeNavigator}
                     options={{
                         title: "Home",
-                        drawerIcon: ({color}) => (
-                            <Icon
-                                name="home"
-                                type="font-awesome"
-                                size={24}
-                                iconStyle={{width: 24}}
-                                color={color}
-                            />
-                        )
-                    }}/>
-                <Drawer.Screen
-                    name="Journal"
-                    component={JournalNavigator}
-                    options={{
-                        title: "Journal",
-                        drawerIcon: ({color}) => (
-                            <Icon
-                                name="heart"
-                                type="font-awesome"
-                                size={24}
-                                iconStyle={{width: 24}}
-                                color={color}
-                            />
-                        )
+                        headerShown: false,
                     }}/>
             </Drawer.Navigator>
         </View>
@@ -119,7 +81,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     stackIcon: {
-        marginLeft: 10,
+        marginRight: 10,
         color: '#fff',
         fontSize: 24
     }
