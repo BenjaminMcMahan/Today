@@ -9,10 +9,24 @@ export const fetchJournalEntries = createAsyncThunk(
     }
 );
 
+export const postJournalEntry = createAsyncThunk(
+    'journal/postJournalEntry',
+    async (payload, { dispatch, getState }) => {
+        const { journalEntries } = getState();
+        payload.date = new Date().toLocaleDateString('en-US');
+        payload.id = journalEntries.entriesArray.length;
+        dispatch(addJournalEntry(payload));
+    }
+)
+
 const journalEntriesSlice = createSlice({
-    name: 'journal-entries',
+    name: 'journalEntries',
     initialState: { isLoading: true, errMess: null, entriesArray: [] },
-    reducers: {},
+    reducers: {
+        addJournalEntry: (state, action) => {
+            state.entriesArray.push(action.payload);
+        }
+    },
     extraReducers: {
         [ fetchJournalEntries.pending ]: (state) => {
             state.isLoading = true;
@@ -29,4 +43,5 @@ const journalEntriesSlice = createSlice({
     }
 });
 
-export const journalEntriesReducer = journalEntriesSlice.reducer;
+export const journalEntriesReducer = journalEntriesSlice.reducer
+export const { addJournalEntry } = journalEntriesSlice.actions;
