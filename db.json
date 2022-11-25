@@ -1,0 +1,16 @@
+{
+  "journal-entries": [
+    {
+      "id": 1,
+      "title": "Dear Diary",
+      "body": "It has been a pretty good day, lots of coding!",
+      "date": "11/24/2022"
+    },
+    {
+      "id": 2,
+      "title": "JavaScript",
+      "body": "Not the best language, not the worst!",
+      "date": "11/25/2022"
+    }
+  ]
+}
